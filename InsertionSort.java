@@ -2,31 +2,32 @@ import java.util.Arrays;
 
 public class InsertionSort implements SortingAlgorithm {
 	public void sort(int[] a) {
-		// Iterate through the array, first finding the lowest and putting it at the beginning, then finding the 2nd lowest... etc. Until the second to last
-		for (int sortedUpTo = 0; sortedUpTo < a.length-1; sortedUpTo++) {
-			// System.out.println("sortedUpTo = " + sortedUpTo);
-			int lowestFound=sortedUpTo;
+		for (int sortedThrough=0; sortedThrough<a.length-1; sortedThrough++) {
+			// System.out.println("sortedThrough = " + sortedThrough);
 
-			// Iterate through the array, looking for the lowest within the unsorted space 
-			for (int lookingAt = sortedUpTo+1; lookingAt<a.length; lookingAt++) {
-				// System.out.println("\tlookingAt = " + lookingAt);
-				// System.out.println("\t  Comparing " + a[lookingAt] + " to " + a[lowestFound]);
-				if (a[lookingAt] < a[lowestFound]) {
-					lowestFound=lookingAt;
+			int toInsertIndex = sortedThrough+1;
+			int toInsertValue = a[toInsertIndex];
+
+			for (int lookingAt=toInsertIndex-1;lookingAt>=0;lookingAt--) {
+				// System.out.println("\tlookingAt =  "+ lookingAt);
+				// System.out.println("\tComparing a[" + toInsertIndex + "]=" + toInsertValue + " with a[" + lookingAt+ "]=" +a[lookingAt]);
+
+				if (toInsertValue< a[lookingAt]) {
+					a[lookingAt+1] = a[lookingAt];
+					a[lookingAt] = toInsertValue;
+					// System.out.println("\t\tnow it looks like: " + Arrays.toString(a));
+
+				} else {
+					a[lookingAt+1] = toInsertValue;
+					// System.out.println("\t\tnow it looks like: " + Arrays.toString(a));
+					break;
+
 				}
 			}
 
-			// System.out.println("\tDECIDED to swap a[" + lowestFound + "]=" + a[lowestFound] + " with a[" + sortedUpTo+ "]=" +a[sortedUpTo]);
-			swap(a,lowestFound,sortedUpTo);
-			// System.out.println("\t(now array looks like: " + Arrays.toString(a) + ")");
+			// System.out.println("  now it looks like: " + Arrays.toString(a));
 
 		}
-	}
-
-	void swap(int[]a, int swap1, int swap2) {
-		int temp = a[swap1];
-		a[swap1] = a[swap2];
-		a[swap2] = temp;
 	}
 
 	public static void main(String[] args) {
@@ -42,4 +43,5 @@ public class InsertionSort implements SortingAlgorithm {
 		sorter.sort(arrayToTest);
 		// System.out.println("Finished as: " + Arrays.toString(arrayToTest));
 	}
+
 }
